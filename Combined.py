@@ -28,6 +28,9 @@ except:
     import math
 
 #Offputting when rendering pdf doesnt see anything
+#add a way to specify size via DPI
+# make a non-answer kill program
+# make the output parameters more clear (such as the calculated size, DPI, etc)
 
 def endcodedDistance(height):
     if height < 5:
@@ -81,18 +84,18 @@ def renderPDF(path,desiredWidth):
     image.save("out.jpg")
     return ".jpg"
 
-printPreferences=0 #0=as large as possible, 1=custom size
+printPreferences=0 #0=as large as possible, 1=custom size, 2=custom DPI
 calcDimens=0 # If Print Preferences==1; 0=Defined Width and height, 1=Width, calculate height, 2=Height, calculate width
 flipImg=1 #if 1, flip image to always be horiz, if 0, flip img to always be vertical.
 
-sizeChoice=easygui.indexbox(msg='Are you printing as large as possible or to a specific size', title='Image Size', choices=('As large as possible', 'Specific size'), image=None)
+sizeChoice=easygui.indexbox(msg='Are you printing as large as possible, to a specific size, or to a specific DPI.', title='Image Size', choices=('As large as possible', 'Specific size','Specific DPI'), image=None)
+paperWidth=easygui.buttonbox(msg='What is the size of paper currently loaded in the printer?', title='Paper Size', choices=('17', '24', '36','44'), image=None)
+paperWidth=int(paperWidth)
+
 if sizeChoice == 0: #as large as possible
-    paperWidth=easygui.buttonbox(msg='Please select the size of paper you would like to print on.', title='Paper Size', choices=('17', '24', '36','44'), image=None)
-    paperWidth=int(paperWidth)
     printPreferences=0
-else: #specific size
-    paperWidth=easygui.buttonbox(msg='What is the size of paper currently loaded in the printer?', title='Paper Size', choices=('17', '24', '36','44'), image=None)
-    paperWidth=int(paperWidth)
+
+elif sizeChoice==1: #specific size
     manualAutomatic=easygui.indexbox(msg='Do you want to specify both the width and the height or specify one and let the program calculate the other automatically?', title='Width and Height', choices=('Width and Height','Auto Calculate'), image=None)
     printPreferences=1
     if manualAutomatic == 0: #manual define width and height
@@ -114,7 +117,10 @@ else: #specific size
         else: #manual define height, calculate width
             imageHeight=easygui.integerbox(msg='Please enter the height of the image you would like to print in inches. \n This is the shorter side of the image', title='Image Height', default=11, lowerbound=5, upperbound=paperWidth, image="widthHeight.jpg") #max height is 80 inches because thats all my LUT supports
             calcDimens=2 #note to calculate width later
-        
+
+else: #specific DPI
+    printPreferences=2
+
 # choose an image to open
 myfile = easygui.fileopenbox(msg="Choose an Image", default=r"C:\\Users\\Jordan\\downloads\\")
 
@@ -182,7 +188,7 @@ if printPreferences == 0:
     imageWidth=paperWidth
     
 
-else: #printPreferences==1
+elif printPreferences==1:
     if calcDimens==0: #manual define width and height
         dpi1=width/imageWidth
         dpi2=height/imageHeight
@@ -201,24 +207,43 @@ else: #printPreferences==1
         imageWidth=int(width/dpi)
         if imageWidth > paperWidth:
             img = img.rotate(90, expand=True)
-            # width = img.width
-            # height = img.height
             img.save(filepath)
             temp=imageHeight #flip imageHeight and imageWidth
             imageHeight=imageWidth
             imageWidth=temp
             if imageHeight > 80: #max height is 80 inches because thats all my LUT supports
-                easygui.msgbox(msg="To print this image with a height of "+str(imageHeight)+"in you need paper that is "+str(imageWidth)+"in tall. The maximum paper height is 80in due to an artificial limitation imposed by the developer of the program. Please email
-            # easygui.msgbox(msg="To print this image with a height of "+str(imageHeight)+"in you need paper that is "+str(imageWidth)+"in wide. The maximum paper width is "+str(paperWidth)+"in. Please re-reun the program and reduce your desired height", title=' ', ok_button='OK', image=None, root=None)
-            # import sys
-            # sys.exit()
+                easygui.msgbox(msg="This image was flipped beause the height specified resulted in a width ("+str(imageHeight)+"in) which was wider than the width of the paper. While the software will normally deal with this issue, the software cannot make the printer extrude anything that is >80 inches long due to programming difficulties. Please restart the program and either reduce the desired height or follow the manual printing method found at the bottom of the LFP manual. Please email jlstone@hmc.edu if you ran into this issue so that I may add more values than 80 inches.", title=' ', ok_button='OK', image=None, root=None)
+                import sys
+                sys.exit()
 
+elif printPreferences==2: #manual define dpi
+    userOK=1
+    while userOK == 1:
+        lowDPI=math.ceil(width/paperWidth)
+        dpi=easygui.integerbox(msg='Please enter the DPI you would like to print at. \n For a high quality print, enter a DPI between 150 and 300. Lower your DPI for a larger print.', title='DPI', default=300, lowerbound=40, upperbound=10000, image=None)
+        if dpi<lowDPI:
+            imageWidth=height/dpi #flip imageHeight and imageWidth
+            imageHeight=width/dpi
+            if imageWidth > paperWidth:
+                easygui.msgbox(msg="To print at this DPI the paper needs to be "+str(imageWidth)+"in wide. The maximum paper width is "+str(paperWidth)+"in. Please enter a DPI that will result in a paper width less than "+str(paperWidth)+"in.", title=' ', ok_button='OK', image=None, root=None)
+                continue
+        else:
+            imageWidth=width/dpi
+            imageHeight=height/dpi
+            if imageHeight > 80:
+                easygui.msgbox(msg="To print at this DPI the paper needs to be "+str(imageHeight)+"in tall. The maximum paper height is 80in. Please enter a DPI that will result in a paper height less than 80in.", title=' ', ok_button='OK', image=None, root=None)
+                continue
+        userOK=easygui.indexbox(msg="Using a DPI of "+str(dpi)+" will result in an image that is "+str(imageWidth)+"in wide and "+str(imageHeight)+"in tall. Is this size good or do you want to choose a different DPI?.", title=' ', choices=('Good', 'Change DPI'), image=None)
+        if dpi<lowDPI and userOK==0:
+            #rotate image
+            img = img.rotate(90, expand=True)
+            img.save(filepath)
 
+imageWidth=int(imageWidth)
 imageHeight=math.ceil(imageHeight)
 today = date.today()
 date=today.strftime("%b-%d-%Y")
 dpi=int(dpi)
-#prepend "use this dpi" to file name
 
 #warn if DPI is too low
 if dpi < 100:
