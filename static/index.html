@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Makerspace LFP Tool</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="main-grid">
+        <div id="display" class="nofile" ondblclick="openFile();" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);">
+            <div id="drag-and-drop">
+                <div id="drag-and-drop-text">
+                    <p>Drag and drop your file here, or double click to open a file.</p>
+                    <p>Supported filetypes: .PDF, .JPG, .JPEG, .PNG, .BMP, .TIFF, .TIF, .WEBP, .GIF</p>
+                </div>
+
+                <input type="file" id="file-input" accept="image/*,application/pdf" onchange="loadFile(event);" class="hidden"/>
+            </div>
+
+            <div id="preview"></div>
+        </div>
+
+        <div id="options">
+            <div class="options-box">
+                <div class="title">
+                    Loaded Paper Size
+                </div>
+                
+                <div id="size-select" class="options">
+                    <button class="radio selected" onclick="setPaperSize(0)">17 in</button>
+                    <button class="radio" onclick="setPaperSize(1)">24 in</button>
+                    <button class="radio" onclick="setPaperSize(2)">36 in</button>
+                    <button class="radio" onclick="setPaperSize(3)">44 in</button>
+                </div>
+            </div>
+
+            <div class="options-box">
+                <div class="title">
+                    Side Alignment
+                </div>
+
+                <div class="explain">
+                    Select which side of the paper to align to the <i>width</i>
+                    of the paper.
+                </div>
+
+                <div id="side-select" class="options">
+                    <button class="radio selected" onclick="setSide(0)" onmouseenter="showPreview('static/img/sample_short_side.png')" onmouseleave="clearPreview()">Short Side</button>
+                    <button class="radio" onclick="setSide(1)" onmouseenter="showPreview('static/img/sample_long_side.png')" onmouseleave="clearPreview()">Long Side</button>
+                </div>
+            </div>
+
+            <div class="options-box">
+                <div class="title">
+                    Sizing
+                </div>
+                <div id="sizing-select" class="options">
+                    <button class="radio selected" onclick="setSizing(0)">Maximize Size</button>
+                    <button class="radio" onclick="setSizing(1)">Specific Width/Height/Both</button>
+                    <button class="radio" onclick="setSizing(2)">Specific DPI</button>
+                </div>
+            </div>
+
+            <div id="h-w-input" class="options-box hidden">
+                <div class="title">
+                    Height & Width
+                </div>
+
+                <div class="explain">
+                    Enter the height and/or width of the image in inches.
+                    <br>
+                    Leave zero to auto-calculate from the other.
+                </div>
+
+                <div class="options">
+                    <input class="num-input" type="number" id="width-input" value="0" min="0" max="44" step="1" onkeyup="setWidth(this.value)"/>
+                    <div class="unit">in</div>
+
+                    <input class="num-input" type="number" id="height-input" value="0" min="0" max="80" step="1" onkeyup="setHeight(this.value)"/>
+                    <div class="unit">in</div>
+                </div>
+            </div>
+
+            <div id="d-input" class="options-box hidden">
+                <div class="title">
+                    DPI
+                </div>
+
+                <div class="explain">
+                    Enter desired DPI of the image.
+                    <br>
+                    Minimum DPI is 40, maximum is 10,000.
+                </div>
+
+                <div class="options">
+                    <input class="num-input" type="number" id="dpi-input" value="300" min="50" max="1000" step="1" onchange="setDPI(this.value)"/>
+                    <div class="unit">dpi</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div id="render">
+            <button id="render-preview" onclick="renderPreview()">Preview</button>
+            <button id="print" onclick="print()">Print</button>
+        </div>
+    </div>
+
+    <script src="static/scripts/app.js"></script>
+</body>
+
+</html>
