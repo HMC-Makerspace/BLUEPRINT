@@ -29,6 +29,7 @@ def processFile():
 
     # Check the file type
     supported_files = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/bmp", "image/tiff", "image/tif", "image/webp"]
+    image = None
 
     if file.content_type in supported_files:
         # If it's a jpg, just return it with the options rendered
@@ -44,11 +45,19 @@ def processFile():
         image = convertPDF(file, options)
 
         image = renderJPG(image, options)
-        
+
         return image
-    else:
-        # If it's not a pdf or a jpg, return an error
-        return "Not a pdf or jpg", 400
+    
+    if image == None:
+        return "Error: Unsupported file type"
+    
+    if (options["print"]):
+        printPhoto(image)
+
+    if (options["preview"]):
+        image = previewPhoto(image)
+
+    return image
 
 
 def convertPDF(file, options):
