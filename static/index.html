@@ -85,14 +85,18 @@
                 <div class="explain">
                     Enter the height and/or width of the image in inches.
                     <br>
+                    The height is the <i>short</i> side of the image.
+                    <br>
+                    The width is the <i>long</i> side of the image.
+                    <br>
                     Leave zero to auto-calculate from the other.
                 </div>
 
                 <div class="options">
-                    <input class="num-input" type="number" id="width-input" value="0" min="0" max="44" step="1" onkeyup="setWidth(this.value)"/>
+                    <input class="num-input" type="number" id="width-input" value="11" min="0" max="44" step="1" onchange="setBoundedValue(this)"/>
                     <div class="unit">in</div>
 
-                    <input class="num-input" type="number" id="height-input" value="0" min="0" max="80" step="1" onkeyup="setHeight(this.value)"/>
+                    <input class="num-input" type="number" id="height-input" value="17" min="0" max="80" step="1" onchange="setBoundedValue(this)"/>
                     <div class="unit">in</div>
                 </div>
             </div>
@@ -109,7 +113,7 @@
                 </div>
 
                 <div class="options">
-                    <input class="num-input" type="number" id="dpi-input" value="300" min="50" max="1000" step="1" onchange="setDPI(this.value)"/>
+                    <input class="num-input" type="number" id="dpi-input" value="300" min="50" max="1000" step="1" onchange="setBoundedValue(this)"/>
                     <div class="unit">dpi</div>
                 </div>
             </div>

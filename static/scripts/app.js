@@ -1,3 +1,7 @@
+var state = {
+    image: null,
+}
+
 const image_area = {
     top_left: { x: 293, y: 405 },
     top_right: { x: 696 , y: 405 },
@@ -42,6 +46,8 @@ function dropHandler(event) {
 function sendFileToApi(file) {
     let options = getOptions();
 
+    let formData = new FormData();
+    
     formData.append("options", JSON.stringify(options));
     formData.append("file", file);
 
@@ -51,11 +57,44 @@ function sendFileToApi(file) {
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            // Do something
+            return xhr.response;
         } else {
-            // Do something else
+            alert("Error " + xhr.status + ": " + xhr.statusText);
         }
     }
+}
+
+function requestNewRender(options) {
+    let formData = new FormData();
+
+    formData.append("options", JSON.stringify(options));
+
+    // Request a new render
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/renderImage", true);
+    xhr.send(formData);
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            return xhr.response;
+        } else {
+            alert("Error " + xhr.status + ": " + xhr.statusText);
+        }
+    }
+}
+
+function renderPreview() {
+    // Render the preview
+    let options = getOptions();
+
+    options["preview"] = true;
+
+    let response = requestNewRender(options);
+
+    if (response) {
+        state.image = response.image;
+        showPreview(response.image);
+    }    
 }
 
 function showPreview(image) {
@@ -112,8 +151,24 @@ function setSizing(index) {
 }
 
 function setDPI(value) {
-    console.log(value);
-    document.getElementById("dpi-input").value = Math.min(10000, Math.max(40, value));
+    document.getElementById("dpi-input").value = Math.floor(Math.min(10000, Math.max(40, value)));
+}
+
+function setBoundedValue(el) {
+    el.value = Math.floor(Math.min(el.max, Math.max(el.min, el.value)));
+}
+
+function setSide(index) {
+    const el = document.getElementById("side-select");
+
+    for (let i = 0; i < el.children.length; i++) {
+        if (i === index) {
+            el.children[i].classList.add("selected");
+        } else {
+            el.children[i].classList.remove("selected");
+        }
+    }
+    
 }
 
 function getOptions() {
