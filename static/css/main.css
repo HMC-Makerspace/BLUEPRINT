@@ -3,6 +3,7 @@
   --color-2: #f5f5f5;
   --color-3: #5b89de;
   --color-4: #7a9fe4;
+  --color-5: #26a81a;
   --text-main: #111111;
   --text-alt: #eeeeee;
   --text-light: #696969;
@@ -55,19 +56,19 @@ body * {
 }
 
 #display.loading {
-  border: 5px dashed var(--color-1);
+  border: 5px dashed var(--color-5);
   animation: loading 1s infinite;
 }
 
 @keyframes loading {
   0% {
-    border-color: var(--color-1);
+    border-color: var(--color-5);
   }
   50% {
     border-color: var(--color-2);
   }
   100% {
-    border-color: var(--color-1);
+    border-color: var(--color-5);
   }
 }
 
@@ -144,7 +145,11 @@ body * {
 }
 
 #h-w-input .options, #d-input .options {
-    gap: 20px;
+    gap: 10px;
+}
+
+.unit {
+  margin-right: 20px;
 }
 
 button:hover {
