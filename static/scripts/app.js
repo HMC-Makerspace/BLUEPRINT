@@ -88,10 +88,6 @@ function renderPreview(options=false) {
         showPreview(state.image_url);
     } else {
         requestNewRender(JSON.parse(JSON.stringify(options)), show=true);
-        
-        options.side = options.side === "short" ? "long" : "short";
-
-        requestNewRender(options, show=false);
     }
 }
 
@@ -136,8 +132,6 @@ function setPaperSize(index) {
             el.children[i].classList.remove("selected");
         }
     }
-
-    renderPreview();
 }
 
 function setSizing(index) {
@@ -184,17 +178,6 @@ function setSide(index) {
         } else {
             el.children[i].classList.remove("selected");
         }
-    }
-
-    let options = getOptions();
-
-    options["preview"] = true;
-
-    let url = state.history[JSON.stringify(options)];
-
-    if (url != undefined) {
-        state.image_url = url;
-        showPreview(state.image_url);
     }
 }
 

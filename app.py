@@ -61,8 +61,6 @@ def renderImage():
         return "Error: Unsupported file type"
 
     if (options["print"]):
-        if (options["side"] == "long" and image.width > image.height) or (options["side"] == "short" and image.width < image.height):
-            width, height = height, width
         printPhoto(image, width, height, dpi)
 
     image = previewPhoto(image, width, height, options["paper_width"])
@@ -266,7 +264,7 @@ def printPhoto(image, width, height, dpi):
     setEpsonConfig(width, height)
 
     # Save to temp output file
-    image.save("output.jpg")
+    image.save("output.png")
 
     # Print the image
     # Call PrintGUI/Executable/PrintGUI.exe
@@ -278,9 +276,9 @@ def printPhoto(image, width, height, dpi):
     cwd = os.getcwd()
 
     print("Printing...")
-    print(cwd + "\\output.jpg")
+    print(cwd + "\\output.png")
 
-    p = subprocess.Popen([path, cwd + "\\output.jpg"], shell=False)
+    p = subprocess.Popen([path, cwd + "\\output.png"], shell=False)
 
 
 if __name__ == "__main__":
