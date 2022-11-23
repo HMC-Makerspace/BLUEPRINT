@@ -50,6 +50,7 @@ function dropHandler(event) {
 
 async function requestNewRender(options, show=true) {
     console.log("Requesting new render");
+    disableRenderButtons();
     let formData = new FormData();
 
     formData.append("file", state.file);
@@ -72,6 +73,8 @@ async function requestNewRender(options, show=true) {
                 showPreview(state.image_url, false);
             }
         }
+
+        enableRenderButtons();
     }
 }
 
@@ -89,6 +92,8 @@ function renderPreview(options=false) {
     } else {
         requestNewRender(JSON.parse(JSON.stringify(options)), show=true);
     }
+
+    removeHighlightRenderButton();
 }
 
 function showPreviewTemp(side) {
@@ -122,6 +127,25 @@ function clearPreview() {
     }
 }
 
+function highlightRenderButton() {
+    document.getElementById("render-preview").classList.add("pulse");
+}
+
+function removeHighlightRenderButton() {
+    document.getElementById("render-preview").classList.remove("pulse");
+}
+
+
+function disableRenderButtons() {
+    document.getElementById("render-preview").disabled = true;
+    document.getElementById("print").disabled = true;
+}
+
+function enableRenderButtons() {
+    document.getElementById("render-preview").disabled = false;
+    document.getElementById("print").disabled = false;
+}
+
 function setPaperSize(index) {
     const el = document.getElementById("size-select");
 
@@ -132,6 +156,8 @@ function setPaperSize(index) {
             el.children[i].classList.remove("selected");
         }
     }
+
+    highlightRenderButton();
 }
 
 function setSizing(index) {
@@ -159,14 +185,19 @@ function setSizing(index) {
             document.getElementById("d-input").classList.remove("hidden");
             break;
     }
+
+    highlightRenderButton();
 }
 
 function setDPI(value) {
     document.getElementById("dpi-input").value = Math.floor(Math.min(10000, Math.max(40, value)));
+
+    highlightRenderButton();
 }
 
 function setBoundedValue(el) {
     el.value = Math.floor(Math.min(el.max, Math.max(el.min, el.value)));
+    highlightRenderButton();
 }
 
 function setSide(index) {
@@ -179,6 +210,7 @@ function setSide(index) {
             el.children[i].classList.remove("selected");
         }
     }
+    highlightRenderButton();
 }
 
 function valueOfSelectedChildren(el) {
@@ -236,6 +268,7 @@ function printImage() {
 
 document.addEventListener("keydown", function (event) {
     if (event.key == "Enter") {
+        event.preventDefault();
         renderPreview();
     }
 });

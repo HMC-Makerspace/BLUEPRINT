@@ -1,5 +1,5 @@
 :root {
-  --color-1: #d43535;
+  --color-1: #1d3664;
   --color-2: #f5f5f5;
   --color-3: #5b89de;
   --color-4: #7a9fe4;
@@ -110,10 +110,12 @@ body * {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .options-box {
-  margin: 20px;
+  margin: 0px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -226,4 +228,50 @@ input.num-input {
     text-align: center;
     cursor: pointer;
     transition: background-color 0.2s;
+}
+
+#render button.pulse {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: var(--color-3);
+    border: 2px solid var(--color-3);
+    color: var(--text-alt);
+  }
+  50% {
+    background-color: var(--color-1);
+    border: 2px solid var(--color-1);
+    color: var(--text-alt);
+  }
+  100% {
+    background-color: var(--color-3);
+    border: 2px solid var(--color-3);
+    color: var(--text-alt);
+  }
+}
+
+#render button:hover {
+    background-color: var(--color-3);
+    color: var(--text-alt);
+}
+
+#render button:active {
+    background-color: var(--color-4);
+    color: var(--text-alt);
+}
+
+#render button:disabled {
+    background-color: var(--text-light) !important;
+    color: var(--text-alt);
+    cursor: not-allowed;
+}
+
+#render button:disabled:hover {
+    background-color: var(--text-light) !important;
+}
+
+#render button:disabled:active {
+    background-color: var(--text-light) !important;
 }
