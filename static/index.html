@@ -73,7 +73,7 @@
                 <div id="sizing-select" class="options">
                     <button value="max_size" class="radio selected" onclick="setSizing(0)">Maximize Size</button>
                     <button value="specific_size" class="radio" onclick="setSizing(1)">Specific Width/Height/Both</button>
-                    <button value="specific_dpi" class="radio" onclick="setSizing(2)">Specific DPI</button>
+                    <button value="specific_dpi" class="radio" id="specific_dpi" onclick="setSizing(2)">Specific DPI</button>
                 </div>
             </div>
 
@@ -85,9 +85,9 @@
                 <div class="explain">
                     Enter the height and/or width of the image in inches.
                     <br>
-                    The height is the <i>short</i> side of the image.
+                    The width is the side of the image that matches the side you selected above.
                     <br>
-                    The width is the <i>long</i> side of the image.
+                    The height is the side of the image that is <i>not</i> selected above.
                     <br>
                     Leave zero to auto-calculate from the other.
                 </div>
@@ -98,7 +98,7 @@
                     <div class="unit">in</div>
 
                     <label for="height-input">Height</label>
-                    <input class="num-input" type="number" id="height-input" value="17" min="0" max="80" step="1" onchange="setBoundedValue(this)"/>
+                    <input class="num-input" type="number" id="height-input" value="17" min="0" max="500" step="1" onchange="setBoundedValue(this)"/>
                     <div class="unit">in</div>
                 </div>
             </div>
@@ -111,7 +111,9 @@
                 <div class="explain">
                     Enter desired DPI of the image.
                     <br>
-                    Minimum DPI is 40, maximum is 10,000.
+                    Minimum DPI is 40, maximum is 10,000. 
+                    <br>
+                    For best results, choose a DPI between 150 and 300.
                 </div>
 
                 <div class="options">

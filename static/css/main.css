@@ -159,6 +159,12 @@ button:hover {
     color: var(--text-alt) !important;
 }
 
+button:disabled {
+  background-color: var(--text-light) !important;
+  color: var(--text-alt);
+  cursor: not-allowed;
+}
+
 button.radio {
   box-sizing: border-box;
   margin: 0px;
@@ -263,9 +269,9 @@ input.num-input {
 }
 
 #render button:disabled {
-    background-color: var(--text-light) !important;
-    color: var(--text-alt);
-    cursor: not-allowed;
+  background-color: var(--text-light) !important;
+  color: var(--text-alt);
+  cursor: not-allowed;
 }
 
 #render button:disabled:hover {

@@ -146,6 +146,14 @@ function enableRenderButtons() {
     document.getElementById("print").disabled = false;
 }
 
+function disableDPIButton() {
+    document.getElementById("specific_dpi").disabled = true;
+}
+
+function enableDPIButton() {
+    document.getElementById("specific_dpi").disabled = false;
+}
+
 function setPaperSize(index) {
     const el = document.getElementById("size-select");
 

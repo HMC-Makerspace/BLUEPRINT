@@ -53,7 +53,7 @@ def endcodedDistance(height):
             stage=0
         if (i==height):
             break
-    return str(hex(result[i-1]))
+    return result[i-1]
 
 def reRenderPDF(path,desiredWidth):
 

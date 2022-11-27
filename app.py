@@ -56,6 +56,8 @@ def renderImage():
         image = convertPDF(file, options)
 
         image, width, height, dpi = calculateJPG(image, options)
+        #TODO call disableDPIButton in JS
+
 
     if image == None:
         return "Error: Unsupported file type"
@@ -67,6 +69,8 @@ def renderImage():
 
     # Save to temp output file with timestamp
     timestamp = str(time.time())
+    #replace the decimal
+    timestamp = timestamp.replace(".", "_")
     image.save("cache/" + timestamp + "output.png")
 
     # Return body, status code, headers
@@ -126,19 +130,19 @@ def calculateJPG(image, options):
     # Case 1: Specific height/width
     if options["specific_width"] != None or options["specific_height"] != None:
         # Resize the image to the specified width & height
-        if options["specific_width"] != None:
+        if options["specific_width"] != None: #specified width, calculate height
             # Calc dpi
             final_dpi = image.width / options["specific_width"]
             final_width_inches = options["specific_width"]
             final_height_inches = image.height / final_dpi
 
-        elif options["specific_height"] != None:
+        elif options["specific_height"] != None: #specified height, calculate width
             # Calc dpi
             final_dpi = image.height / options["specific_height"]
             final_width_inches = image.width / final_dpi
             final_height_inches = options["specific_height"]
 
-        else:
+        else: #specified both, just resize
             # Calc dpi from both width and height
             final_dpi = image.width / options["paper_width"]
 
