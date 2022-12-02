@@ -15,6 +15,7 @@ import shutil
 import os
 import subprocess
 import time
+import math
 
 app = Flask(__name__)
 
@@ -180,8 +181,11 @@ def calculateJPG(image, options):
 
     # Make sure all final sizes are ints
     final_width_inches = int(final_width_inches)
-    final_height_inches = int(final_height_inches)
+    final_height_inches = math.ceil(final_height_inches)
     final_dpi = int(final_dpi)
+
+    print("Final width: " + str(final_width_inches) + " inches")
+    print("Final height: " + str(final_height_inches) + " inches")
 
     return image, final_width_inches, final_height_inches, final_dpi
 
