@@ -162,7 +162,7 @@ button:hover {
 button:disabled {
   background-color: var(--text-light) !important;
   color: var(--text-alt);
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 
 button.radio {

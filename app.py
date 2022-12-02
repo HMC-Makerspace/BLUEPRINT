@@ -14,6 +14,7 @@ import json
 import shutil
 import os
 import subprocess
+import time
 
 app = Flask(__name__)
 
@@ -26,6 +27,9 @@ def index():
 
 @app.route("/renderImage", methods=["POST"])
 def renderImage():
+    # Start timer:
+    start_time = time.time()
+
     # Always return a jpg or an error
     # Takes in a pdf or jpg
     # Returns a jpg
@@ -56,8 +60,6 @@ def renderImage():
         image = convertPDF(file, options)
 
         image, width, height, dpi = calculateJPG(image, options)
-        #TODO call disableDPIButton in JS
-
 
     if image == None:
         return "Error: Unsupported file type"
@@ -72,6 +74,10 @@ def renderImage():
     #replace the decimal
     timestamp = timestamp.replace(".", "_")
     image.save("cache/" + timestamp + "output.png")
+
+    # Stop timer
+    end_time = time.time()
+    print("Rendered image in " + str(end_time - start_time) + " seconds")
 
     # Return body, status code, headers
     return "/getImage/" + timestamp, 200, {"Content-Type": "image/png"}
@@ -120,11 +126,9 @@ def calculateJPG(image, options):
 
     # Flip the image so that the long side is the width
     if image.width > image.height and options["side"] == "short":
-        print("Rotating 90")
         image = image.transpose(Image.ROTATE_90)
 
     if image.width < image.height and options["side"] == "long":
-        print("Rotating 90")
         image = image.transpose(Image.ROTATE_90)
 
     # Case 1: Specific height/width
@@ -243,23 +247,13 @@ def previewPhoto(image, width, height, paper_width):
 
     width_pix = 420 * (width / 44)
     # Calc height from width
-    print(width_pix, height, width)
     height_pix = width_pix * (height/width)
-
-    print("Width: " + str(width_pix))
-    print("Height: " + str(height_pix))
 
     # Resize the image
     image = image.resize((int(width_pix), int(height_pix)), Image.ANTIALIAS)
 
     # Paste the image so bottom right aligns with 705 px X and 669 px Y
     preview.paste(image, (705 - int(width_pix), 669 - int(height_pix)))
-
-    # Draw line from bottom right to bottom left of width
-    paper_width_pix = 420 * (paper_width / 44)
-    draw = ImageDraw.Draw(preview)
-    draw.line((705, 669, 705 - int(paper_width_pix), 669),
-              fill=(0, 0, 0, 255), width=5)
 
     return preview
 

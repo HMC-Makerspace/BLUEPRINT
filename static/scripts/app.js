@@ -2,6 +2,7 @@ var state = {
     image_url: null,
     history: {},
     file: null,
+    isPDF: false,
 }
 
 const image_area = {
@@ -35,6 +36,18 @@ function loadFile(event) {
 
     state.history = {};
     state.file = event.target.files[0];
+
+    // if it's a pdf
+    if (state.file.type == "application/pdf") {
+        state.isPDF = true;
+        // Disable dpi button
+        document.getElementById("specific_dpi").disabled = true;
+    } else {
+        state.isPDF = false;
+        // Enable dpi button
+        document.getElementById("specific_dpi").disabled = false;
+    }
+
     renderPreview();
 }
 
@@ -92,7 +105,7 @@ function renderPreview(options=false) {
     } else {
         requestNewRender(JSON.parse(JSON.stringify(options)), show=true);
     }
-
+    
     removeHighlightRenderButton();
 }
 
