@@ -190,7 +190,7 @@ def calculateJPG(image, options):
     return image, final_width_inches, final_height_inches, final_dpi
 
 
-def encodedDistance(height):
+def encodedDistance(inches):
     start = 65535
     vector = [0, 1, 0, 1, 1, 0, 1, 0, 1, 1,
               0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1]
@@ -199,7 +199,7 @@ def encodedDistance(height):
     result = []
     stage = 0
 
-    for i in range(height):
+    for i in range(inches + 1):
         if (vector[stage] == 0):
             result.append(start - 39935)
             start = start - 39935
