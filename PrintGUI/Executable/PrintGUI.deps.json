@@ -1,22 +1,22 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v6.0/win-x64",
+    "name": ".NETCoreApp,Version=v6.0/win-x86",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {},
-    ".NETCoreApp,Version=v6.0/win-x64": {
+    ".NETCoreApp,Version=v6.0/win-x86": {
       "PrintGUI/1.0.0": {
         "dependencies": {
-          "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "6.0.6",
-          "runtimepack.Microsoft.WindowsDesktop.App.Runtime.win-x64": "6.0.6"
+          "runtimepack.Microsoft.NETCore.App.Runtime.win-x86": "6.0.6",
+          "runtimepack.Microsoft.WindowsDesktop.App.Runtime.win-x86": "6.0.6"
         },
         "runtime": {
           "PrintGUI.dll": {}
         }
       },
-      "runtimepack.Microsoft.NETCore.App.Runtime.win-x64/6.0.6": {
+      "runtimepack.Microsoft.NETCore.App.Runtime.win-x86/6.0.6": {
         "runtime": {
           "Microsoft.CSharp.dll": {
             "assemblyVersion": "6.0.0.0",
@@ -668,7 +668,10 @@
           }
         },
         "native": {
-          "Microsoft.DiaSymReader.Native.amd64.dll": {
+          "API-MS-Win-core-xstate-l2-1-0.dll": {
+            "fileVersion": "10.0.22000.194"
+          },
+          "Microsoft.DiaSymReader.Native.x86.dll": {
             "fileVersion": "14.28.29715.1"
           },
           "System.IO.Compression.Native.dll": {
@@ -824,7 +827,7 @@
           "mscordaccore.dll": {
             "fileVersion": "6.0.622.26707"
           },
-          "mscordaccore_amd64_amd64_6.0.622.26707.dll": {
+          "mscordaccore_x86_x86_6.0.622.26707.dll": {
             "fileVersion": "6.0.622.26707"
           },
           "mscordbi.dll": {
@@ -841,7 +844,7 @@
           }
         }
       },
-      "runtimepack.Microsoft.WindowsDesktop.App.Runtime.win-x64/6.0.6": {
+      "runtimepack.Microsoft.WindowsDesktop.App.Runtime.win-x86/6.0.6": {
         "runtime": {
           "Accessibility.dll": {
             "assemblyVersion": "4.0.0.0",
@@ -1082,138 +1085,138 @@
       "serviceable": false,
       "sha512": ""
     },
-    "runtimepack.Microsoft.NETCore.App.Runtime.win-x64/6.0.6": {
+    "runtimepack.Microsoft.NETCore.App.Runtime.win-x86/6.0.6": {
       "type": "runtimepack",
       "serviceable": false,
       "sha512": ""
     },
-    "runtimepack.Microsoft.WindowsDesktop.App.Runtime.win-x64/6.0.6": {
+    "runtimepack.Microsoft.WindowsDesktop.App.Runtime.win-x86/6.0.6": {
       "type": "runtimepack",
       "serviceable": false,
       "sha512": ""
     }
   },
   "runtimes": {
-    "win-x64": [
+    "win-x86": [
       "win",
       "any",
       "base"
     ],
-    "win-x64-aot": [
+    "win-x86-aot": [
       "win-aot",
-      "win-x64",
+      "win-x86",
       "win",
       "aot",
       "any",
       "base"
     ],
-    "win10-x64": [
+    "win10-x86": [
       "win10",
-      "win81-x64",
+      "win81-x86",
       "win81",
-      "win8-x64",
+      "win8-x86",
       "win8",
-      "win7-x64",
+      "win7-x86",
       "win7",
-      "win-x64",
+      "win-x86",
       "win",
       "any",
       "base"
     ],
-    "win10-x64-aot": [
+    "win10-x86-aot": [
       "win10-aot",
-      "win10-x64",
+      "win10-x86",
       "win10",
-      "win81-x64-aot",
+      "win81-x86-aot",
       "win81-aot",
-      "win81-x64",
+      "win81-x86",
       "win81",
-      "win8-x64-aot",
+      "win8-x86-aot",
       "win8-aot",
-      "win8-x64",
+      "win8-x86",
       "win8",
-      "win7-x64-aot",
+      "win7-x86-aot",
       "win7-aot",
-      "win7-x64",
+      "win7-x86",
       "win7",
-      "win-x64-aot",
+      "win-x86-aot",
       "win-aot",
-      "win-x64",
+      "win-x86",
       "win",
       "aot",
       "any",
       "base"
     ],
-    "win7-x64": [
+    "win7-x86": [
       "win7",
-      "win-x64",
+      "win-x86",
       "win",
       "any",
       "base"
     ],
-    "win7-x64-aot": [
+    "win7-x86-aot": [
       "win7-aot",
-      "win7-x64",
+      "win7-x86",
       "win7",
-      "win-x64-aot",
+      "win-x86-aot",
       "win-aot",
-      "win-x64",
+      "win-x86",
       "win",
       "aot",
       "any",
       "base"
     ],
-    "win8-x64": [
+    "win8-x86": [
       "win8",
-      "win7-x64",
+      "win7-x86",
       "win7",
-      "win-x64",
+      "win-x86",
       "win",
       "any",
       "base"
     ],
-    "win8-x64-aot": [
+    "win8-x86-aot": [
       "win8-aot",
-      "win8-x64",
+      "win8-x86",
       "win8",
-      "win7-x64-aot",
+      "win7-x86-aot",
       "win7-aot",
-      "win7-x64",
+      "win7-x86",
       "win7",
-      "win-x64-aot",
+      "win-x86-aot",
       "win-aot",
-      "win-x64",
+      "win-x86",
       "win",
       "aot",
       "any",
       "base"
     ],
-    "win81-x64": [
+    "win81-x86": [
       "win81",
-      "win8-x64",
+      "win8-x86",
       "win8",
-      "win7-x64",
+      "win7-x86",
       "win7",
-      "win-x64",
+      "win-x86",
       "win",
       "any",
       "base"
     ],
-    "win81-x64-aot": [
+    "win81-x86-aot": [
       "win81-aot",
-      "win81-x64",
+      "win81-x86",
       "win81",
-      "win8-x64-aot",
+      "win8-x86-aot",
       "win8-aot",
-      "win8-x64",
+      "win8-x86",
       "win8",
-      "win7-x64-aot",
+      "win7-x86-aot",
       "win7-aot",
-      "win7-x64",
+      "win7-x86",
       "win7",
-      "win-x64-aot",
+      "win-x86-aot",
       "win-aot",
-      "win-x64",
+      "win-x86",
       "win",
       "aot",
       "any",
