@@ -219,8 +219,12 @@ def setEpsonConfig(width, height):
     configLocation = "C:\ProgramData\EPSON\EPSON SC-P8000 Series\E_31CL01LE.UCF"
     filename = "E_31CL01LE.UCF"
 
-    height = min(580, height)
-    width = min(44, width)
+    newWidth = min(44, width)
+    height = height * (newWidth / width)
+    width = newWidth
+
+    print("Setting EPSON config to " + str(width) + " inches wide and " + str(height) + " inches tall")
+
 
     with open(filename, 'r+b') as f:
         newDec = encodedDistance(height)
