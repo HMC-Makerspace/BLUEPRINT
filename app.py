@@ -220,12 +220,12 @@ def setEpsonConfig(width, height):
     filename = "E_31CL01LE.UCF"
 
     with open(filename, 'r+b') as f:
-        newDec = encodedDistance(height)
+        newDec = encodedDistance(min(580, height))
         newbytes = newDec.to_bytes(2, byteorder='big')
         f.seek(0X0004173C)
         f.write(newbytes)
 
-        newDec = encodedDistance(width)
+        newDec = encodedDistance(min(44, width))
         newbytes = newDec.to_bytes(2, byteorder='big')
         f.seek(0X00041738)
         f.write(newbytes)
