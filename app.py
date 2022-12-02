@@ -221,14 +221,14 @@ def setEpsonConfig(width, height):
 
     height = min(580, height)
     width = min(44, width)
-    
+
     with open(filename, 'r+b') as f:
-        newDec = encodedDistance()
+        newDec = encodedDistance(height)
         newbytes = newDec.to_bytes(2, byteorder='big')
         f.seek(0X0004173C)
         f.write(newbytes)
 
-        newDec = encodedDistance()
+        newDec = encodedDistance(width)
         newbytes = newDec.to_bytes(2, byteorder='big')
         f.seek(0X00041738)
         f.write(newbytes)
