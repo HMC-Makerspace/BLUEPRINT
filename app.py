@@ -148,12 +148,17 @@ def calculateJPG(image, options):
             final_height_inches = options["specific_height"]
 
         else: #specified both, just resize
-            # Calc dpi from both width and height
-            final_dpi = image.width / options["paper_width"]
-
-            # Resize the image
-            final_width_inches = options["specific_width"]
-            final_height_inches = options["specific_height"]
+            # Determine which is bounding dimension
+            if image.width / options["specific_width"] > image.height / options["specific_height"]:
+                # Width is bounding
+                final_dpi = image.width / options["specific_width"]
+                final_width_inches = options["specific_width"]
+                final_height_inches = image.height / final_dpi
+            else:
+                # Height is bounding
+                final_dpi = image.height / options["specific_height"]
+                final_width_inches = image.width / final_dpi
+                final_height_inches = options["specific_height"]
 
     # Case 2: Specific DPI
     elif options["specific_dpi"] != None:
