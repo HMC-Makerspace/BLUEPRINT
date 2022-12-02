@@ -40,7 +40,7 @@ namespace PrintGUI // Note: actual namespace depends on the project name.
                     num_times_wrong = 0;
                 }
 
-                if (num_times_wrong == 100)
+                if (num_times_wrong == 10000)
                 {
                     return;
                 }
