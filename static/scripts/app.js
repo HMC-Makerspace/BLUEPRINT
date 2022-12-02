@@ -3,6 +3,7 @@ var state = {
     history: {},
     file: null,
     isPDF: false,
+    paper_width: 44,
 }
 
 const image_area = {
@@ -69,7 +70,7 @@ function dropHandler(event) {
         // Enable dpi button
         document.getElementById("specific_dpi").disabled = false;
     }
-    
+
     renderPreview();
 }
 
@@ -185,6 +186,7 @@ function setPaperSize(index) {
     for (let i = 0; i < el.children.length; i++) {
         if (i === index) {
             el.children[i].classList.add("selected");
+            state.paper_width = Number(el.children[i].value);
         } else {
             el.children[i].classList.remove("selected");
         }
@@ -228,8 +230,13 @@ function setDPI(value) {
     highlightRenderButton();
 }
 
-function setBoundedValue(el) {
-    el.value = Math.floor(Math.min(el.max, Math.max(el.min, el.value)));
+function setBoundedValue(el, override_max=false, override_min=false) {
+    let max = override_max ? override_max : el.max;
+    let min = override_min ? override_min : el.min;
+
+    console.log(max, min);
+
+    el.value = Math.floor(Math.min(max, Math.max(min, el.value)));
     highlightRenderButton();
 }
 
@@ -301,7 +308,6 @@ function printImage() {
 
 document.addEventListener("keydown", function (event) {
     if (event.key == "Enter") {
-        event.preventDefault();
         renderPreview();
     }
 });

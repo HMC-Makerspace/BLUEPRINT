@@ -135,13 +135,13 @@ def calculateJPG(image, options):
     # Case 1: Specific height/width
     if options["specific_width"] != None or options["specific_height"] != None:
         # Resize the image to the specified width & height
-        if options["specific_width"] != None: #specified width, calculate height
+        if options["specific_width"] != None and options["specific_height"] == None: #specified width, calculate height
             # Calc dpi
             final_dpi = image.width / options["specific_width"]
             final_width_inches = options["specific_width"]
             final_height_inches = image.height / final_dpi
 
-        elif options["specific_height"] != None: #specified height, calculate width
+        elif options["specific_height"] != None and options["specific_width"] == None: #specified height, calculate width
             # Calc dpi
             final_dpi = image.height / options["specific_height"]
             final_width_inches = image.width / final_dpi

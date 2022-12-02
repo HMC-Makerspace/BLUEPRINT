@@ -94,11 +94,11 @@
 
                 <div class="options">
                     <label for="width-input">Width</label>
-                    <input class="num-input" type="number" id="width-input" value="11" min="0" max="44" step="1" onchange="setBoundedValue(this)"/>
+                    <input class="num-input" type="number" id="width-input" value="11" min="0" max="44" step="1" onchange="setBoundedValue(this, state.paper_width)"/>
                     <div class="unit">in</div>
 
                     <label for="height-input">Height</label>
-                    <input class="num-input" type="number" id="height-input" value="17" min="0" max="500" step="1" onchange="setBoundedValue(this)"/>
+                    <input class="num-input" type="number" id="height-input" value="17" min="0" max="500" step="1" onchange="setBoundedValue(this, false, 5)"/>
                     <div class="unit">in</div>
                 </div>
             </div>
