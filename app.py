@@ -220,7 +220,7 @@ def setEpsonConfig(width, height):
     filename = "E_31CL01LE.UCF"
 
     newWidth = min(44, width)
-    height = height * (newWidth / width)
+    height = int(height * (newWidth / width))
     width = newWidth
 
     print("Setting EPSON config to " + str(width) + " inches wide and " + str(height) + " inches tall")
