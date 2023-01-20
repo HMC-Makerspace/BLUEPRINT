@@ -222,14 +222,17 @@ def encodedDistance(inches):
 
 def setEpsonConfig(width, height):
     configLocation = "C:\ProgramData\EPSON\EPSON SC-P8000 Series\E_31CL01LE.UCF"
+    filename_bak = "E_31CL01LE.UCF.bak"
     filename = "E_31CL01LE.UCF"
+
+    # Copy config file to current directory
+    shutil.copyfile(filename_bak, filename)
 
     newWidth = min(44, width)
     height = int(height * (newWidth / width))
     width = newWidth
 
     print("Setting EPSON config to " + str(width) + " inches wide and " + str(height) + " inches tall")
-
 
     with open(filename, 'r+b') as f:
         newDec = encodedDistance(height)
@@ -293,6 +296,14 @@ def printPhoto(image, width, height, dpi):
     print(cwd + "\\output.png")
 
     p = subprocess.Popen([path, cwd + "\\output.png"], shell=False)
+
+    # Delete cache files in cache dir
+    for file in os.listdir("cache"):
+        os.remove("cache/" + file)
+    
+    # Put a single file in cache dir
+    # to prevent github from deleting the dir
+    image.save("cache/preview.png")
 
 
 if __name__ == "__main__":

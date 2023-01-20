@@ -38,6 +38,10 @@
 
         <div id="options">
             <div class="options-box">
+                <button id="open-log" class="radio" onclick="openLog()">Open Log</button>
+            </div>
+
+            <div class="options-box">
                 <div class="title">
                     Loaded Paper Size
                 </div>
@@ -128,8 +132,21 @@
             <button id="render-preview" onclick="renderPreview()">Preview</button>
             <button id="print" onclick="printImage()">Print</button>
         </div>
+
+        <div id="log-container" class="hidden">
+            <div id="log">
+                <div id="log-header">
+                    <div id="log-title">Print Log</div>
+                    <button id="close-log" onclick="closeLog()">X</button>
+                </div>
+                <table id="log-content">
+                    
+                </table>
+            </div>
+        </div>
     </div>
 
+    <script src="static/scripts/localforage.min.js"></script>
     <script src="static/scripts/app.js"></script>
 </body>
 
