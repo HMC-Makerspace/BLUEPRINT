@@ -4,6 +4,7 @@ from flask import send_file
 from markupsafe import escape
 
 from PIL import Image
+Image.MAX_IMAGE_PIXELS = None
 from PIL import ImageDraw
 import pypdfium2 as pdfium
 import PyPDF2
