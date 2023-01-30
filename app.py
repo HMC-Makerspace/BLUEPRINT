@@ -101,11 +101,11 @@ def convertPDF(file, options):
     pdf = pdfium.PdfDocument(file)
     pdf2 = PyPDF2.PdfReader(file, "rb")
 
-    p = pdf2.getPage(0)
+    p = pdf2.pages[0]
     page = pdf[0]
 
-    width = p.mediaBox.getWidth()/72
-    height = p.mediaBox.getHeight()/72
+    width = p.mediabox.width/72
+    height = p.mediabox.height/72
 
     min_side_length = min(width, height)
     desPixels = options["paper_width"] * 300
