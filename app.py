@@ -8,7 +8,7 @@ Image.MAX_IMAGE_PIXELS = None
 from PIL import ImageDraw
 import pypdfium2 as pdfium
 import PyPDF2
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from PyPDF2 import PdfFileWriter, PdfReader
 
 import time
 import json
@@ -99,7 +99,7 @@ def getImage(timestamp):
 
 def convertPDF(file, options):
     pdf = pdfium.PdfDocument(file)
-    pdf2 = PyPDF2.PdfFileReader(file, "rb")
+    pdf2 = PyPDF2.PdfReader(file, "rb")
 
     p = pdf2.getPage(0)
     page = pdf[0]
