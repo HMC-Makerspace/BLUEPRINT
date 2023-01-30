@@ -308,4 +308,7 @@ def printPhoto(image, width, height, dpi):
 
 
 if __name__ == "__main__":
+    # Create the cache folder if it doesn't exist
+    if not os.path.exists("cache"):
+        os.makedirs("cache")
     app.run()
