@@ -49,6 +49,7 @@ namespace ImageGlass.Library.WinAPI {
             var dropTarget = (IDropTarget)Activator.CreateInstance(dropTargetType);
 
             dropTarget.Drop(dataObj, 0, new Point(), 0);
+
         }
     }
 }

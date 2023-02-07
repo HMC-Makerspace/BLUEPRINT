@@ -4,11 +4,15 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows;
 
 namespace PrintGUI // Note: actual namespace depends on the project name.
 {
     internal class Program
     {
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
         static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -25,6 +29,19 @@ namespace PrintGUI // Note: actual namespace depends on the project name.
             Console.WriteLine(args[0]);
             OpenPrintPictures(args[0]);
             Console.WriteLine("Done");
+
+            // Bring the print window to the foreground
+            Process[] processes = Process.GetProcesses();
+
+            foreach (var process in processes)
+            {
+                if (process.MainWindowTitle
+                           .IndexOf("Print Pictures", StringComparison.InvariantCulture) > -1)
+                {
+                    SetForegroundWindow(process.MainWindowHandle);
+                    break;
+                }
+            }
 
             int num_times_wrong = 0;
 

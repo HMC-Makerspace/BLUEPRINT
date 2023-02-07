@@ -312,8 +312,8 @@ async function printImage() {
     if (result.startsWith("Error")) {
         alert(result);
     } else {
-        alert("Printing in new window...");
         requestNewRender(options);
+        alert("Printing in new window...");
     }
 }
 
