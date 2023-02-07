@@ -312,8 +312,8 @@ async function printImage() {
     if (result.startsWith("Error")) {
         alert(result);
     } else {
+        alert("Make sure to reselect \"Paper Size\" as CALCULATED PAPER, even if it is already selected. Then, uncheck \"Fit picture to frame\". Click OK to continue.");
         requestNewRender(options);
-        alert("Printing in new window...");
     }
 }
 
