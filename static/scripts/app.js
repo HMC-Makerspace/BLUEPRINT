@@ -6,7 +6,9 @@ var state = {
     history: {},
     file: null,
     isPDF: false,
-    paper_width: 44,
+    paper_width: 36,
+    college_id: null,
+    user_data: null,
 }
 
 const image_area = {
@@ -121,8 +123,6 @@ function renderPreview(options=false) {
     } else {
         requestNewRender(JSON.parse(JSON.stringify(options)), show=true);
     }
-    
-    removeHighlightRenderButton();
 }
 
 function showPreviewTemp(side) {
@@ -156,22 +156,15 @@ function clearPreview() {
     }
 }
 
-function highlightRenderButton() {
-    document.getElementById("render-preview").classList.add("pulse");
+function triggerChange() {
+    renderPreview();
 }
-
-function removeHighlightRenderButton() {
-    document.getElementById("render-preview").classList.remove("pulse");
-}
-
 
 function disableRenderButtons() {
-    document.getElementById("render-preview").disabled = true;
     document.getElementById("print").disabled = true;
 }
 
 function enableRenderButtons() {
-    document.getElementById("render-preview").disabled = false;
     document.getElementById("print").disabled = false;
 }
 
@@ -195,7 +188,7 @@ function setPaperSize(index) {
         }
     }
 
-    highlightRenderButton();
+    triggerChange();
 }
 
 function setSizing(index) {
@@ -224,13 +217,13 @@ function setSizing(index) {
             break;
     }
 
-    highlightRenderButton();
+    triggerChange();
 }
 
 function setDPI(value) {
     document.getElementById("dpi-input").value = Math.floor(Math.min(10000, Math.max(40, value)));
 
-    highlightRenderButton();
+    triggerChange();
 }
 
 function setBoundedValue(el, override_max=false, override_min=false) {
@@ -240,7 +233,7 @@ function setBoundedValue(el, override_max=false, override_min=false) {
     console.log(max, min);
 
     el.value = Math.floor(Math.min(max, Math.max(min, el.value)));
-    highlightRenderButton();
+    triggerChange();
 }
 
 function setSide(index) {
@@ -253,7 +246,7 @@ function setSide(index) {
             el.children[i].classList.remove("selected");
         }
     }
-    highlightRenderButton();
+    triggerChange();
 }
 
 function valueOfSelectedChildren(el) {
@@ -301,25 +294,45 @@ function getOptions() {
     return options;
 }
 
+function openPrintConfirmation() {
+    // Open confirmation modal
+    document.getElementById("print-confirmation-container").classList.remove("hidden");
+}
+
+function closePrintConfirmation() {
+    // Close confirmation modal
+    document.getElementById("print-confirmation-container").classList.add("hidden");
+}
+
 async function printImage() {
     // Print the image
     let options = getOptions();
     options["print"] = true;
 
     // Log print
-    const result = await logPrint(options);
+    await logPrint(options);
+    
+    await requestNewRender(options);
 
-    if (result.startsWith("Error")) {
-        alert(result);
-    } else {
-        alert("Make sure to reselect \"Paper Size\" as CALCULATED PAPER, even if it is already selected. Then, uncheck \"Fit picture to frame\". Click OK to continue.");
-        requestNewRender(options);
-    }
+    closePrintConfirmation();
 }
 
 async function logPrint(options) {
+    // Log print
+    const log_data = {
+        id_number: state.college_id ?? "Unknown",
+        user_info: state.user_data ?? "Unknown",
+        options: options,
+        timestamp: Date.now(),
+    };
+
+    // Store log in indexedDB using localforage by timestamp
+    await localforage.setItem(log_data.timestamp, log_data);
+}
+
+async function checkID() {
     // Prompt user for ID number
-    let id_number = prompt("Please enter your ID number");
+    let id_number = document.getElementById("id-input").getElementsByTagName("input")[0].value;
 
     id_number = parseCollegeID(id_number);
 
@@ -344,25 +357,28 @@ async function logPrint(options) {
         // If data.passed_quizzes does not contain
         // "General", return error
         if (!data.passed_quizzes.includes("General")) {
+            setAbleToPrint(false);
             return "Error: User has not passed General Safety Quiz";
         }
 
-        // Log print
-        const log_data = {
-            id_number: id_number,
-            user_info: data,
-            options: options,
-            timestamp: Date.now(),
-        };
+        state.user_data = data;
+        state.college_id = id_number;
 
-        console.log("To store:", data);
-
-        // Store log in indexedDB using localforage by timestamp
-        await localforage.setItem(log_data.timestamp, log_data);
-
+        setAbleToPrint(true);
         return "Success";
     } else {
+        setAbleToPrint(false);
         return "Error: User not in system";
+    }
+}
+
+function setAbleToPrint(able) {
+    if (able) {
+        document.getElementById("id-input").getElementsByTagName("input")[0].classList.remove("error");
+        document.getElementById("print-confirmation-yes").disabled = false;
+    } else {
+        document.getElementById("id-input").getElementsByTagName("input")[0].classList.add("error");
+        document.getElementById("print-confirmation-yes").disabled = true;
     }
 }
 
