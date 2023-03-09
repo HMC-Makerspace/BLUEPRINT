@@ -2,7 +2,7 @@ const API = 'https://make.hmc.edu/api/v1';
 
 
 var state = {
-    image_url: null,
+    image_obj: null,
     history: {},
     file: null,
     isPDF: false,
@@ -94,14 +94,14 @@ async function requestNewRender(options, show=true) {
 
     xhr.onload = function () {
         if (xhr.status == 200) {
-            state.history[JSON.stringify(options)] = xhr.response;
+            state.history[JSON.stringify(options)] = JSON.parse(xhr.response);
 
             document.getElementById("display").classList.remove("loading");
             document.getElementById("display").classList.add("loaded");
 
             if (show) {
-                state.image_url = xhr.response;
-                showPreview(state.image_url, false);
+                state.image_obj = JSON.parse(xhr.response);
+                showPreview(state.image_obj, false);
             }
         }
 
@@ -109,7 +109,7 @@ async function requestNewRender(options, show=true) {
     }
 }
 
-function renderPreview(options=false) {
+async function renderPreview(options=false) {
     if (!options) {
         // Render the preview
         options = getOptions();
@@ -118,11 +118,25 @@ function renderPreview(options=false) {
 
     if (state.history[JSON.stringify(options)]) {
         console.log("Using cached render");
-        state.image_url = state.history[JSON.stringify(options)];
-        showPreview(state.image_url);
+        state.image_obj = state.history[JSON.stringify(options)];
+        showPreview(state.image_obj);
     } else {
-        requestNewRender(JSON.parse(JSON.stringify(options)), show=true);
+        await requestNewRender(JSON.parse(JSON.stringify(options)), show=true);
     }
+}
+
+function updateInfoBox() {
+    let info = document.getElementById("info-box");
+
+    let width = state.image_obj.width;
+    let height = state.image_obj.height;
+    let dpi = state.image_obj.dpi;
+
+    if (dpi < 50) {
+        dpi += " (WARNING - Low DPI)";
+    }
+
+    info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}`;
 }
 
 function showPreviewTemp(side) {
@@ -142,7 +156,8 @@ function showPreviewTemp(side) {
 function showPreview(image) {
     // Display the image
     const img = document.getElementById("preview");
-    img.style.backgroundImage = `url(${image})`;
+    updateInfoBox();
+    img.style.backgroundImage = `url(${image.image_url})`;
 }
 
 function clearPreview() {
@@ -151,8 +166,8 @@ function clearPreview() {
 
     img.style.backgroundImage = "";
 
-    if (state.image_url) {
-        showPreview(state.image_url);
+    if (state.image_obj) {
+        showPreview(state.image_obj);
     }
 }
 
@@ -311,7 +326,7 @@ async function printImage() {
 
     // Log print
     await logPrint(options);
-    
+
     await requestNewRender(options);
 
     closePrintConfirmation();

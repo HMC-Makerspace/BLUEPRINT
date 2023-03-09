@@ -81,8 +81,8 @@ def renderImage():
     end_time = time.time()
     print("Rendered image in " + str(end_time - start_time) + " seconds")
 
-    # Return body, status code, headers
-    return "/getImage/" + timestamp, 200, {"Content-Type": "image/png"}
+    # Return body, status code, headers, size, and dpi
+    return {"image_url": "/getImage/" + timestamp, "width": width, "height": height, "dpi": dpi}, 200, {"Content-Type": "application/json"}
 
 
 @app.route("/getImage/<timestamp>", methods=["GET"])

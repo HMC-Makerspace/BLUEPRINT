@@ -252,7 +252,7 @@ input.num-input {
 #info-box {
   border: 2px solid var(--color-1);
   border-radius: var(--button-radius);
-  width: 40%;
+  width: 80%;
   padding: 20px;
   font-size: 1em;
   font-weight: 600;
