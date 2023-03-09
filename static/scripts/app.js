@@ -311,6 +311,7 @@ function getOptions() {
 
 function openPrintConfirmation() {
     // Open confirmation modal
+    document.getElementById("id-input").getElementsByTagName("input")[0].value = "";
     document.getElementById("print-confirmation-container").classList.remove("hidden");
 }
 
