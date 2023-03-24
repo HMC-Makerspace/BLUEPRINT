@@ -281,8 +281,10 @@ def previewPhoto(image, width, height, paper_width):
 def printPhoto(image, width, height, dpi):
     setEpsonConfig(width, height)
 
+    # Convert to RGB (for images saved in CMYK that don't work in PNG)
+    image.convert('RGB').save("output.png")
     # Save to temp output file
-    image.save("output.png")
+    # image.save("output.png")
 
     # Print the image
     # Call PrintGUI/Executable/PrintGUI.exe
@@ -304,7 +306,8 @@ def printPhoto(image, width, height, dpi):
     
     # Put a single file in cache dir
     # to prevent github from deleting the dir
-    image.save("cache/preview.png")
+    # image.save("cache/preview.png")
+    image.convert('RGB').save("cache/preview.png")
 
 
 if __name__ == "__main__":
