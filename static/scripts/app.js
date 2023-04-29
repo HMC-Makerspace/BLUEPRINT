@@ -104,6 +104,17 @@ async function requestNewRender(options, show=true) {
                 state.image_obj = JSON.parse(xhr.response);
                 showPreview(state.image_obj, false);
             }
+        } else {
+            console.error("Error: " + xhr.status);
+
+            clearTimeout(loading_timeout);
+            document.getElementById("image-loading-container").classList.add("hidden");
+
+            if (xhr.status == 415) {
+                alert("Error: File type not supported. Please upload a PDF, SVG, or supported image file.");
+            } else {
+                alert("Error: " + xhr.status);
+            }
         }
 
         enableRenderButtons();
