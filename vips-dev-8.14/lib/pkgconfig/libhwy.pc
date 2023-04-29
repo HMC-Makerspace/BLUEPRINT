@@ -1,0 +1,10 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libhwy
+Description: Efficient and performance-portable SIMD wrapper
+Version: 1.0.4
+Libs: -L${libdir} -lhwy
+Cflags: -I${includedir} -DHWY_SHARED_DEFINE

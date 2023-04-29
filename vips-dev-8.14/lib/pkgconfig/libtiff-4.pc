@@ -1,0 +1,13 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libtiff
+Description:  Tag Image File Format (TIFF) library.
+Version: 4.5.0
+Libs: -L${libdir} -ltiff
+# don't duplicate Requires.private
+#Libs.private: -lwebp -ljpeg -lz 
+Cflags: -I${includedir}
+Requires.private: libwebp libjpeg zlib 

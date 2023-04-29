@@ -1,0 +1,11 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: spng
+Description: PNG decoding and encoding library
+Version: 0.7.3
+Requires.private: zlib
+Libs: -L${libdir} -lspng
+Libs.private: -lm
+Cflags: -I${includedir}

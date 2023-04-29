@@ -1,0 +1,12 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include/nifti
+zlib_support=true
+
+Name: znzlib
+Description: Low level library for handling read/write of compressed files
+Version: 3.0.1
+Requires: zlib
+Libs: -L${libdir} -lznz
+Cflags: -I${includedir}

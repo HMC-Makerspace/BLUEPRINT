@@ -1,0 +1,8 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+includedir=${prefix}/include
+
+Name: cairo-ft
+Description: Freetype font backend for cairo graphics library
+Version: 1.17.8
+Requires: cairo, freetype2 >=  9.7.3
+Cflags: -I${includedir}

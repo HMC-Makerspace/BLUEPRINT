@@ -1,0 +1,12 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: vips
+Description: Image processing library
+Version: 8.14.2
+Requires: glib-2.0 >= 2.40, gio-2.0, gobject-2.0
+Requires.private: gmodule-no-export-2.0, expat, zlib >= 0.4, fftw3, cfitsio, imagequant, cgif >= 0.2.0, libexif >= 0.6, libjpeg, spng >= 0.7, libwebp >= 0.6, libwebpmux >= 0.6, libwebpdemux >= 0.6, pangocairo >= 1.32.6, pangoft2 >= 1.32.6, fontconfig, libtiff-4, librsvg-2.0 >= 2.40.3, cairo >= 1.2, matio, lcms2, OpenEXR >= 1.2.2, libopenjp2 >= 2.4, orc-0.4 >= 0.4.11, libheif >= 1.3.0, niftiio
+Libs: -L${libdir} -lvips
+Libs.private: -lm -lintl
+Cflags: -I${includedir}

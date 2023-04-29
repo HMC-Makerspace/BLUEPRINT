@@ -1,0 +1,14 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/ImageMagick-6
+includearchdir=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/ImageMagick-6
+libname=MagickCore-6.Q16
+ 
+Name: ImageMagick
+Description: ImageMagick - convert, edit, and compose images (ABI Q16)
+URL: https://github.com/ImageMagick/ImageMagick6
+Version: 6.9.12
+Cflags:  -I${includearchdir} -I${includedir} -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -D_DLL
+Libs: -L${libdir} -l${libname}
+Libs.private: -L${libdir} -l${libname}   -llcms2    -lfreetype    -ljpeg                       -lopenjp2 -llcms2 -lpng16 -ltiff -lz      -lxml2        -lm       -lm

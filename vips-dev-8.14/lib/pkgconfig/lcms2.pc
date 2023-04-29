@@ -1,0 +1,10 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: lcms2
+Description: LCMS Color Management Library
+Version: 2.15
+Libs: -L${libdir} -llcms2
+Libs.private: -lm
+Cflags: -I${includedir}

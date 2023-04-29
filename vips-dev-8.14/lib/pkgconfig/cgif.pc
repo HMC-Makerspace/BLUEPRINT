@@ -1,0 +1,9 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: cgif
+Description: A fast and lightweight GIF encoder
+Version: 0.3.0
+Libs: -L${libdir} -lcgif
+Cflags: -I${includedir}

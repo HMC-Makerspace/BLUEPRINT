@@ -1,0 +1,13 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libjxl
+Description: Loads and saves JPEG XL files
+Version: 0.8.1
+Requires.private: libhwy libbrotlicommon libbrotlienc libbrotlidec lcms2
+Libs: -L${libdir} -ljxl
+Libs.private: -lm
+Cflags: -I${includedir}
+Cflags.private: -DJXL_STATIC_DEFINE

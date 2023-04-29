@@ -1,0 +1,10 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: Pixman
+Description: The pixman library (version 1)
+Version: 0.42.2
+Libs: -L${libdir} -lpixman-1
+Libs.private: -lm
+Cflags: -I${includedir}/pixman-1

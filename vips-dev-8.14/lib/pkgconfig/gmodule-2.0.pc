@@ -1,0 +1,10 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+includedir=${prefix}/include
+
+gmodule_supported=true
+
+Name: GModule
+Description: Dynamic module loader for GLib
+Version: 2.76.0
+Requires: gmodule-no-export-2.0, glib-2.0
+Cflags: -I${includedir}

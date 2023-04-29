@@ -4,11 +4,8 @@ from flask import send_file
 from markupsafe import escape
 
 from PIL import Image
-Image.MAX_IMAGE_PIXELS = None
 from PIL import ImageDraw
 import pypdfium2 as pdfium
-import PyPDF2
-from PyPDF2 import PdfFileWriter, PdfReader
 
 import time
 import json
@@ -17,6 +14,16 @@ import os
 import subprocess
 import time
 import math
+import io
+
+# Add vips-dev-8.14 to path by getting current executable path
+# and adding "/vips-dev-8.10/bin" to it
+os.environ["PATH"] += os.pathsep + os.path.dirname(os.path.realpath(__file__)) + "/vips-dev-8.14/bin"
+import pyvips
+
+
+# Set the max image size to infinity
+Image.MAX_IMAGE_PIXELS = None
 
 app = Flask(__name__)
 
@@ -45,27 +52,32 @@ def renderImage():
     options = json.loads(options)
 
     # Check the file type
-    supported_files = ["image/jpeg", "image/jpg", "image/png",
+    supported_images = ["image/jpeg", "image/jpg", "image/png",
                        "image/gif", "image/bmp", "image/tiff", "image/tif", "image/webp"]
     image = None
 
-    if file.content_type in supported_files:
+    if file.content_type in supported_images:
         # If it's a jpg, just return it with the options rendered
 
         # turn file into a PIL image
         image = Image.open(file)
 
-        # Render the options
-        image, width, height, dpi = calculateJPG(image, options)
-
     elif file.content_type == "application/pdf":
         image = convertPDF(file, options)
 
-        image, width, height, dpi = calculateJPG(image, options)
+    elif file.content_type == "image/svg+xml":
+        image = convertSVG(file, options)
+
+    else:
+        # Return 415 Unsupported Media Type
+        return {"error": "Unsupported Media Type"}, 415, {"Content-Type": "application/json"}
+
 
     if image == None:
         return "Error: Unsupported file type"
-
+    else :
+        image, width, height, dpi = calculateJPG(image, options)
+        
     if (options["print"]):
         printPhoto(image, width, height, dpi)
 
@@ -98,17 +110,16 @@ def getImage(timestamp):
 
 
 def convertPDF(file, options):
-    pdf = pdfium.PdfDocument(file)
-    pdf2 = PyPDF2.PdfReader(file, "rb")
+    print("Rendering from PDF...")
 
-    p = pdf2.pages[0]
+    pdf = pdfium.PdfDocument(file)
     page = pdf[0]
 
-    width = p.mediabox.width/72
-    height = p.mediabox.height/72
+    width = page.get_width()
+    height = page.get_height()
 
     min_side_length = min(width, height)
-    desPixels = options["paper_width"] * 300
+    desPixels = options["paper_width"] * 300 * 72
     dpi = int(desPixels/min_side_length)
 
     image = page.render_to(
@@ -118,6 +129,27 @@ def convertPDF(file, options):
 
     return image
 
+def convertSVG(file, options):
+    print("Rendering from SVG...")
+    # Convert the svg to an Image   
+    # Assume 8000px wide
+
+    # Save svg to temp file
+    file.save("temp.svg")
+
+    # Convert the svg to a png
+    buf = pyvips.Image.thumbnail("temp.svg", 8000).write_to_buffer(".png", compression=9, strip=True, palette=True, Q=100)
+
+    # Delete the temp file
+    os.remove("temp.svg")
+
+    print("Opening image...")
+
+    # Turn the output into an image, reading as utf-8
+    image = Image.open(io.BytesIO(buf))
+
+    print("Done!")
+    return image
 
 def calculateJPG(image, options):
     # Render the options on the image

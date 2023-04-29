@@ -1,0 +1,11 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: harfbuzz
+Description: HarfBuzz text shaping library
+Version: 7.1.0
+Requires.private: freetype2, glib-2.0
+Libs: -L${libdir} -lharfbuzz
+Libs.private: -lm
+Cflags: -I${includedir}/harfbuzz

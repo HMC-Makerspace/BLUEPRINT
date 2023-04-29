@@ -1,0 +1,10 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: harfbuzz-gobject
+Description: HarfBuzz text shaping library GObject integration
+Version: 7.1.0
+Requires: harfbuzz =  7.1.0, glib-2.0, gobject-2.0
+Libs: -L${libdir} -lharfbuzz-gobject
+Cflags: -I${includedir}/harfbuzz

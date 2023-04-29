@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuremap [
+  <!ELEMENT configuremap (configure)+>
+  <!ATTLIST configuremap xmlns CDATA #FIXED ''>
+  <!ELEMENT configure EMPTY>
+  <!ATTLIST configure xmlns CDATA #FIXED '' name NMTOKEN #REQUIRED
+    value CDATA #REQUIRED>
+]>
+<!--
+  ImageMagick build configuration.
+-->
+<configuremap>
+  <configure name="CC" value="x86_64-w64-mingw32.shared.posix.all-gcc"/>
+  <configure name="CFLAGS" value="-I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/libxml2   -I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/openjpeg-2.5 -I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/libpng16 -I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/webp     -I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/freetype2 -I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/libpng16 -I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/harfbuzz -I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/glib-2.0 -I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/lib/glib-2.0/include -mms-bitfields    -Wall -O3 -fdata-sections -ffunction-sections -fexceptions -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16"/>
+  <configure name="CODER_PATH" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/lib/ImageMagick-6.9.12/modules-Q16/coders"/>
+  <configure name="CONFIGURE_PATH" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/etc/ImageMagick-6/"/>
+  <configure name="CONFIGURE" value="/var/tmp/tmp-imagemagick-x86_64-w64-mingw32.shared.posix.all/ImageMagick6-6.9.12-82/configure  '--host=x86_64-w64-mingw32.shared.posix.all' '--build=x86_64-pc-linux-gnu' '--prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all' '--disable-static' '--enable-shared' 'ac_cv_prog_HAVE_DOXYGEN=false' '--enable-doc=no' '--enable-gtk-doc=no' '--enable-gtk-doc-html=no' '--enable-gtk-doc-pdf=no' '--docdir=/var/tmp/tmp-imagemagick-x86_64-w64-mingw32.shared.posix.all/ImageMagick6-6.9.12-82.build_.sink' '--infodir=/var/tmp/tmp-imagemagick-x86_64-w64-mingw32.shared.posix.all/ImageMagick6-6.9.12-82.build_.sink' '--mandir=/var/tmp/tmp-imagemagick-x86_64-w64-mingw32.shared.posix.all/ImageMagick6-6.9.12-82.build_.sink' '--with-html-dir=/var/tmp/tmp-imagemagick-x86_64-w64-mingw32.shared.posix.all/ImageMagick6-6.9.12-82.build_.sink' '--disable-doxygen' '--without-fftw' '--without-fontconfig' '--without-gdi32' '--without-gvc' '--without-heic' '--without-heif' '--without-jxl' '--without-ltdl' '--without-lqr' '--without-lzma' '--without-magick-plus-plus' '--without-modules' '--without-openexr' '--without-pango' '--without-png' '--without-rsvg' '--without-tiff' '--without-webp' '--without-x' '--without-zlib' '--without-threads' '--disable-largefile' '--disable-opencl' '--disable-openmp' '--disable-deprecated' 'build_alias=x86_64-pc-linux-gnu' 'host_alias=x86_64-w64-mingw32.shared.posix.all' 'CFLAGS=-O3 -fdata-sections -ffunction-sections' 'LDFLAGS=-Wl,--gc-sections -Wl,-s' 'CXXFLAGS=-O3 -fdata-sections -ffunction-sections'"/>
+  <configure name="COPYRIGHT" value="Copyright (C) 1999 ImageMagick Studio LLC"/>
+  <configure name="CPPFLAGS" value="-I/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/ImageMagick-6 -D_DLL"/>
+  <configure name="CXXFLAGS" value="-O3 -fdata-sections -ffunction-sections"/>
+  <configure name="CXX" value="x86_64-w64-mingw32.shared.posix.all-g++"/>
+  <configure name="DEFS" value="-DHAVE_CONFIG_H"/>
+  <configure name="DELEGATES" value="freetype jpeg lcms openjp2 ps xml"/>
+  <configure name="DISTCHECK_CONFIG_FLAGS" value="'CFLAGS=-O3 -fdata-sections -ffunction-sections' 'LDFLAGS=-Wl,--gc-sections -Wl,-s'  --disable-deprecated  --with-quantum-depth=16  --with-jemalloc=no  --with-umem=no  --with-zlib=no  --with-autotrace=no  --with-dps=no  --with-fftw=no  --with-fpx=no  --with-fontconfig=no  --with-gdi32=no  --with-gslib=no  --with-fontpath=  --with-gvc=no  --with-heic=no  --with-lqr=no  --with-lzma=no  --with-openexr=no  --with-pango=no  --with-png=no  --with-rsvg=no  --with-tiff=no  --with-webp=no  --with-wmf=no  --with-perl=no "/>
+  <configure name="DOCUMENTATION_PATH" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/share/doc/ImageMagick-6"/>
+  <configure name="EXEC-PREFIX" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all"/>
+  <configure name="EXECUTABLE_PATH" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/bin"/>
+  <configure name="FEATURES" value="Cipher"/>
+  <configure name="FILTER_PATH" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/lib/ImageMagick-6.9.12/modules-Q16/filters"/>
+  <configure name="GIT_REVISION" value="e389f9049:20230318" />
+  <configure name="HOST" value="x86_64-w64-mingw32.shared.posix.all"/>
+  <configure name="INCLUDE_PATH" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include/ImageMagick-6"/>
+  <configure name="LDFLAGS" value="-L/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/lib -Wl,--gc-sections -Wl,-s"/>
+  <configure name="LIBRARY_PATH" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/lib/ImageMagick-6.9.12"/>
+  <configure name="LIBS" value="  -llcms2    -lfreetype    -ljpeg                       -lopenjp2 -llcms2 -lpng16 -ltiff -lz      -lxml2        -lm      "/>
+  <configure name="LIB_VERSION_NUMBER" value="6,9,12,82"/>
+  <configure name="LIB_VERSION" value="0x69C"/>
+  <configure name="NAME" value="ImageMagick"/>
+  <configure name="PCFLAGS" value="-DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -D_DLL"/>
+  <configure name="PREFIX" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all"/>
+  <configure name="QuantumDepth" value="16"/>
+  <configure name="RELEASE_DATE" value="2023-03-18"/>
+  <configure name="SHAREARCH_PATH" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/lib/ImageMagick-6.9.12/config-Q16"/>
+  <configure name="SHARE_PATH" value="/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/share/ImageMagick-6"/>
+  <configure name="TARGET_CPU" value="x86_64"/>
+  <configure name="TARGET_OS" value="mingw32.shared.posix.all"/>
+  <configure name="TARGET_VENDOR" value="w64"/>
+  <configure name="VERSION" value="6.9.12"/>
+  <configure name="WEBSITE" value="https://legacy.imagemagick.org"/>
+</configuremap>

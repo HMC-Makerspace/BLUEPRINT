@@ -1,0 +1,13 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libjxl_threads
+Description: JPEG XL multi-thread runner using std::threads.
+Version: 0.8.1
+Requires.private: 
+Libs: -L${libdir} -ljxl_threads
+Libs.private: -lm
+Cflags: -I${includedir}
+Cflags.private: -DJXL_THREADS_STATIC_DEFINE

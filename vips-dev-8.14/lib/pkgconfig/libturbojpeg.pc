@@ -1,0 +1,10 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+exec_prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+libdir=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/lib
+includedir=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include
+
+Name: libturbojpeg
+Description: A SIMD-accelerated JPEG codec that provides the TurboJPEG API
+Version: 4.1.1
+Libs: -L${libdir} -lturbojpeg
+Cflags: -I${includedir}

@@ -1,0 +1,12 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+libdir=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/lib
+includedir=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all/include
+
+Name: poppler-glib
+Description: GLib wrapper for poppler
+Version: 23.03.0
+Requires: glib-2.0 >= 2.64 gobject-2.0 >= 2.64 cairo >= 1.16.0 
+Requires.private: poppler = 23.03.0
+
+Libs: -L${libdir} -lpoppler-glib
+Cflags: -I${includedir}/poppler/glib

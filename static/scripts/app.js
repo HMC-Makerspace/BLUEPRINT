@@ -18,6 +18,8 @@ const image_area = {
     bottom_right: { x: 705, y: 668 }
 }
 
+var loading_timeout = null;
+
 function dragOverHandler(event) {
     event.preventDefault();
 
@@ -38,8 +40,6 @@ function openFile() {
 }
 
 function loadFile(event) {
-    document.getElementById("display").classList.add("loading");
-
     state.history = {};
     state.file = event.target.files[0];
 
@@ -59,7 +59,6 @@ function loadFile(event) {
 
 function dropHandler(event) {
     document.getElementById("display").classList.remove("fileover");
-    document.getElementById("display").classList.add("loading");
 
     event.preventDefault();
     state.history = {};
@@ -96,8 +95,10 @@ async function requestNewRender(options, show=true) {
         if (xhr.status == 200) {
             state.history[JSON.stringify(options)] = JSON.parse(xhr.response);
 
-            document.getElementById("display").classList.remove("loading");
             document.getElementById("display").classList.add("loaded");
+
+            clearTimeout(loading_timeout);
+            document.getElementById("image-loading-container").classList.add("hidden");
 
             if (show) {
                 state.image_obj = JSON.parse(xhr.response);
@@ -110,6 +111,10 @@ async function requestNewRender(options, show=true) {
 }
 
 async function renderPreview(options=false) {
+    loading_timeout = setTimeout(function () {
+        document.getElementById("image-loading-container").classList.remove("hidden");
+    }, 100);
+
     if (!options) {
         // Render the preview
         options = getOptions();
@@ -120,6 +125,9 @@ async function renderPreview(options=false) {
         console.log("Using cached render");
         state.image_obj = state.history[JSON.stringify(options)];
         showPreview(state.image_obj);
+        // Stop loading_timeout
+        clearTimeout(loading_timeout);
+        document.getElementById("image-loading-container").classList.add("hidden");
     } else {
         await requestNewRender(JSON.parse(JSON.stringify(options)), show=true);
     }

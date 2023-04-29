@@ -1,0 +1,4 @@
+Name: gl
+Version: 0
+Description: OpenGL
+Libs: -lopengl32

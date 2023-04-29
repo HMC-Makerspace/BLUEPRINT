@@ -1,0 +1,11 @@
+prefix=/data/mxe/usr/x86_64-w64-mingw32.shared.posix.all
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include/nifti
+
+Name: niftiio
+Description: Core i/o routines for reading and writing nifti-1 format files
+Version: 3.0.1
+Requires: znzlib
+Libs: -L${libdir} -lniftiio
+Cflags: -I${includedir}
