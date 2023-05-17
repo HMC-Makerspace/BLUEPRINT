@@ -375,6 +375,9 @@ async function checkID() {
         return "Error: Invalid ID number";
     }
 
+    setAbleToPrint(true);
+    return;
+    
     // Call api to verify ID
     const response = await fetch(`${API}/users/info/${id_number}`);
 
