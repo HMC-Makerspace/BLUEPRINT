@@ -102,6 +102,8 @@ async function requestNewRender(options, show=true) {
 
             if (show) {
                 state.image_obj = JSON.parse(xhr.response);
+                enableRenderButtons();
+
                 showPreview(state.image_obj, false);
             }
         } else {
@@ -116,8 +118,6 @@ async function requestNewRender(options, show=true) {
                 alert("Error: " + xhr.status);
             }
         }
-
-        enableRenderButtons();
     }
 }
 
@@ -155,7 +155,7 @@ function updateInfoBox() {
         dpi += " <span class='red'>(WARNING - Low DPI)</span>";
     }
 
-    if (width < 5 || height < 5) {
+    if (width <= 5 || height <= 5) {
         document.getElementById("print").disabled = true;
         info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}<br><span class='red'>Image is too small to print</span>`;
     } else {
