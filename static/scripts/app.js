@@ -155,7 +155,13 @@ function updateInfoBox() {
         dpi += " <span class='red'>(WARNING - Low DPI)</span>";
     }
 
-    info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}`;
+    if (width < 5 || height < 5) {
+        document.getElementById("print").disabled = true;
+        info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}<br><span class='red'>Image is too small to print</span>`;
+    } else {
+        document.getElementById("print").disabled = false;
+        info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}`;
+    }
 }
 
 function showPreviewTemp(side) {
