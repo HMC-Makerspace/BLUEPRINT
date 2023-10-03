@@ -350,6 +350,17 @@ async function printImage() {
     await requestNewRender(options);
 
     closePrintConfirmation();
+    openLoadingModal();
+}
+
+function closeGif() {
+    // Close loading modal
+    document.getElementById("gif-container").classList.add("hidden");
+}
+
+function openLoadingModal() {
+    // Open loading modal
+    document.getElementById("gif-container").classList.remove("hidden");
 }
 
 async function logPrint(options) {

@@ -369,7 +369,7 @@ input.num-input {
   padding: 10px;
 }
 
-#print-confirmation-container, #image-loading-container {
+#print-confirmation-container, #image-loading-container, #gif-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -383,7 +383,7 @@ input.num-input {
   align-items: center;
 }
 
-#print-confirmation, #image-loading {
+#print-confirmation, #image-loading, #gif {
   width: 500px;
   height: 300px;
   background-color: var(--color-2);
@@ -394,6 +394,33 @@ input.num-input {
   align-items: center;
   row-gap: 20px;
   padding: 50px; 
+}
+
+#gif {
+  width: unset;
+  height: unset;
+}
+
+#gif-header {
+  position: relative;
+  width: 100%;
+}
+
+#close-gif {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background-color: var(--color-1);
+  color: var(--text-alt);
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid var(--color-1);
+  font-weight: bolder;
 }
 
 #print-confirmation-yes:hover {
