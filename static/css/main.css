@@ -406,6 +406,11 @@ input.num-input {
   width: 100%;
 }
 
+span.red {
+  color: var(--color-6);
+  font-weight: bold;
+}
+
 #close-gif {
   position: absolute;
   top: -20px;

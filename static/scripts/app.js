@@ -152,7 +152,7 @@ function updateInfoBox() {
     let dpi = state.image_obj.dpi;
 
     if (dpi < 50) {
-        dpi += " (WARNING - Low DPI)";
+        dpi += " <span class='red'>(WARNING - Low DPI)</span>";
     }
 
     info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}`;
