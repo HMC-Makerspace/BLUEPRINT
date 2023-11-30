@@ -40,6 +40,12 @@ function openFile() {
 }
 
 function loadFile(event) {
+    // If the file name starts with ._ (macOS hidden file), return
+    if (event.target.files[0].name.startsWith("._")) {
+        alert("Error: Invalid file");
+        return;
+    }
+
     state.history = {};
     state.file = event.target.files[0];
 

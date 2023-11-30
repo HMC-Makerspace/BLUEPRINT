@@ -19,8 +19,10 @@ import io
 # Add vips-dev-8.14 to path by getting current executable path
 # and adding "/vips-dev-8.10/bin" to it
 os.environ["PATH"] += os.pathsep + os.path.dirname(os.path.realpath(__file__)) + "/vips-dev-8.14/bin"
-import pyvips
-
+try:
+    import pyvips
+except Exception as e:
+    print("Error importing pyvips: " + str(e))
 
 # Set the max image size to infinity
 Image.MAX_IMAGE_PIXELS = None
