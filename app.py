@@ -256,6 +256,10 @@ def encodedDistance(inches):
 
 
 def setEpsonConfig(width, height):
+    setEpsonP8000Config(width, height)
+    setEpsonP9900Config(width, height)
+
+def setEpsonP8000Config(width, height):
     configLocation = "C:\ProgramData\EPSON\EPSON SC-P8000 Series\E_31CL01LE.UCF"
     filename_bak = "E_31CL01LE.UCF.bak"
     filename = "E_31CL01LE.UCF"
@@ -267,8 +271,7 @@ def setEpsonConfig(width, height):
     height = int(height * (newWidth / width))
     width = newWidth
 
-    print("Setting EPSON config to " + str(width) + " inches wide and " + str(height) + " inches tall")
-    print("Testing for new P9900")
+    print("Setting EPSON P8000 config to " + str(width) + " inches wide and " + str(height) + " inches tall")
 
     with open(filename, 'r+b') as f:
         newDec = encodedDistance(height)
@@ -293,7 +296,46 @@ def setEpsonConfig(width, height):
             f.write(newbytes)
 
     # copy file to config location
-    shutil.copy("E_31CL01LE.UCF", configLocation)
+    shutil.copy(filename, configLocation)
+
+def setEpsonP9900Config(width, height):
+    configLocation = "C:\ProgramData\EPSON\EPSON Stylus Pro 9900\E_FCL0EHE.UCF"
+    filename_bak = "E_FCL0EHE.UCF.bak"
+    filename = "E_FCL0EHE.UCF"
+
+    # Copy config file to current directory
+    shutil.copyfile(filename_bak, filename)
+
+    newWidth = min(44, width)
+    height = int(height * (newWidth / width))
+    width = newWidth
+
+    print("Setting EPSON P9900 config to " + str(width) + " inches wide and " + str(height) + " inches tall")
+
+    with open(filename, 'r+b') as f:
+        encoded_height = encodedDistance(height)
+        encoded_height_bytes = encoded_height.to_bytes(2, byteorder='big')
+        f.seek(0X0004173C)
+        f.write(encoded_height_bytes)
+
+        encoded_width = encodedDistance(width)
+        encoded_width_bytes = encoded_width.to_bytes(2, byteorder='big')
+        f.seek(0X00041738)
+        f.write(encoded_width_bytes)
+
+        if (height > width):
+            f.seek(0X00041736)
+            encoded_portrait = 0x00
+            encoded_portrait_bytes = encoded_portrait.to_bytes(2, byteorder='big')
+            f.write(encoded_portrait_bytes)
+        else:
+            f.seek(0X00041736)
+            encoded_portrait = 0x01
+            encoded_portrait_bytes = encoded_portrait.to_bytes(2, byteorder='big')
+            f.write(encoded_portrait_bytes)
+
+    # copy file to config location
+    shutil.copy(filename, configLocation)
 
 
 def previewPhoto(image, width, height, paper_width):
