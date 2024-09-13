@@ -268,6 +268,7 @@ def setEpsonConfig(width, height):
     width = newWidth
 
     print("Setting EPSON config to " + str(width) + " inches wide and " + str(height) + " inches tall")
+    print("Testing for new P9900")
 
     with open(filename, 'r+b') as f:
         newDec = encodedDistance(height)
