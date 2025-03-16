@@ -1,5 +1,7 @@
 const API = 'https://make.hmc.edu/api/v1';
 
+const price_per_sq_ft = 0.60;
+const price_per_sq_in = price_per_sq_ft / (12.0 * 12.0);
 
 var state = {
     image_obj: null,
@@ -157,16 +159,19 @@ function updateInfoBox() {
     let height = state.image_obj.height;
     let dpi = state.image_obj.dpi;
 
+    // Ceiling to the nearest cent
+    let price = Math.ceil(state.paper_width * state.image_obj.height * price_per_sq_in * 100) / 100;
+
     if (dpi < 50) {
         dpi += " <span class='red'>(WARNING - Low DPI)</span>";
     }
 
     if (width <= 5 || height <= 5) {
         document.getElementById("print").disabled = true;
-        info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}<br><span class='red'>Image is too small to print</span>`;
+        info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}<br>Price: $${price.toFixed(2)}<span class='red'>Image is too small to print</span>`;
     } else {
         document.getElementById("print").disabled = false;
-        info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}`;
+        info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}<br>Price: $${price.toFixed(2)}`;
     }
 }
 
