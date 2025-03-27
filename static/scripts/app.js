@@ -168,7 +168,7 @@ function updateInfoBox() {
 
     if (width <= 5 || height <= 5) {
         document.getElementById("print").disabled = true;
-        info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}<br>Price: $${price.toFixed(2)}<span class='red'>Image is too small to print</span>`;
+        info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}<br>Price: $${price.toFixed(2)}<br><span class='red'>Image is too small to print</span>`;
     } else {
         document.getElementById("print").disabled = false;
         info.innerHTML = `Size: ${width}x${height} inches<br>DPI: ${dpi}<br>Price: $${price.toFixed(2)}`;
