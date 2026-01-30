@@ -347,7 +347,7 @@ def previewPhoto(image, width, height, paper_width):
     height_pix = width_pix * (height/width)
 
     # Resize the image
-    image = image.resize((int(width_pix), int(height_pix)), Image.ANTIALIAS)
+    image = image.resize((int(width_pix), int(height_pix)), Image.LANCZOS)
 
     # Paste the image so bottom right aligns with 705 px X and 669 px Y
     preview.paste(image, (705 - int(width_pix), 669 - int(height_pix)))

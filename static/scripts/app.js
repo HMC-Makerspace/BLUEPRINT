@@ -345,17 +345,6 @@ function getOptions() {
     return options;
 }
 
-function openPrintConfirmation() {
-    // Open confirmation modal
-    document.getElementById("id-input").getElementsByTagName("input")[0].value = "";
-    document.getElementById("print-confirmation-container").classList.remove("hidden");
-}
-
-function closePrintConfirmation() {
-    // Close confirmation modal
-    document.getElementById("print-confirmation-container").classList.add("hidden");
-}
-
 async function printImage() {
     // Print the image
     let options = getOptions();
@@ -365,8 +354,6 @@ async function printImage() {
     await logPrint(options);
 
     await requestNewRender(options);
-
-    closePrintConfirmation();
     openLoadingModal();
 }
 
@@ -391,136 +378,6 @@ async function logPrint(options) {
 
     // Store log in indexedDB using localforage by timestamp
     await localforage.setItem(log_data.timestamp, log_data);
-}
-
-async function checkID() {
-    // Prompt user for ID number
-    let id_number = document.getElementById("id-input").getElementsByTagName("input")[0].value;
-
-    id_number = parseCollegeID(id_number);
-
-    if (id_number == null) {
-        return "Error: Invalid ID number";
-    }
-
-    setAbleToPrint(true);
-    return;
-    
-    // Call api to verify ID
-    const response = await fetch(`${API}/users/info/${id_number}`);
-
-    if (response.status == 200) {
-        // Get data
-        const data = await response.json();
-
-        console.log(data);
-
-        // If data is null, return false
-        if (data == null) {
-            return "Error: User not in system";
-        }
-
-        // If data.passed_quizzes does not contain
-        // "General", return error
-        if (!data.passed_quizzes.includes("General")) {
-            setAbleToPrint(false);
-            return "Error: User has not passed General Safety Quiz";
-        }
-
-        state.user_data = data;
-        state.college_id = id_number;
-
-        setAbleToPrint(true);
-        return "Success";
-    } else {
-        setAbleToPrint(false);
-        return "Error: User not in system";
-    }
-}
-
-function setAbleToPrint(able) {
-    if (able) {
-        document.getElementById("id-input").getElementsByTagName("input")[0].classList.remove("error");
-        document.getElementById("print-confirmation-yes").disabled = false;
-    } else {
-        document.getElementById("id-input").getElementsByTagName("input")[0].classList.add("error");
-        document.getElementById("print-confirmation-yes").disabled = true;
-    }
-}
-
-function parseCollegeID(collegeID) {
-    collegeID = collegeID.trim();
-
-    if (collegeID.length == 0) {
-        return null;
-    }
-
-    if (collegeID.includes("-") || collegeID.includes("_") || collegeID.includes(" ")) {
-        collegeID = collegeID.replace(/[_ ]/g, "-");
-
-        return parseInt(collegeID.split("-")[0]);
-    } else {
-        return parseInt(collegeID);
-    }
-}
-
-function openLog() {
-    const log_el = document.getElementById("log-container");
-    const log_content_el = document.getElementById("log-content");
-
-    // Loop through all items in indexedDB using localforage
-    let rows = [];
-    localforage.iterate((value, key, iterationNumber) => {
-        console.log([key, value]);
-
-        // Create table row
-        const tr = document.createElement("tr");
-
-        // Create table data
-        const td1 = document.createElement("td");
-        const td2 = document.createElement("td");
-        const td3 = document.createElement("td");
-        const td4 = document.createElement("td");
-        const td5 = document.createElement("td");
-
-        // Set inner HTML
-        td1.innerHTML = new Date(value.timestamp).toLocaleString();
-        td2.innerHTML = value.user_info.college_id
-        td3.innerHTML = value.user_info.name;
-        td4.innerHTML = value.user_info.college_email;
-        td5.innerHTML = value.options.paper_width + " inches";
-
-        // Append to table row
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tr.appendChild(td3);
-        tr.appendChild(td4);
-        tr.appendChild(td5);
-
-        rows = [tr, ...rows];        
-    }).then(() => {
-        // Clear log content
-        log_content_el.innerHTML = `
-        <tr>
-            <th>Timestamp</th>
-            <th>College ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Roll Width</th>
-        </tr>
-        `;
-
-        // Append rows to log content
-        rows.forEach(row => {
-            log_content_el.appendChild(row);
-        });
-
-        log_el.classList.remove("hidden");
-    });
-}
-
-function closeLog() {
-    document.getElementById("log-container").classList.add("hidden");
 }
 
 document.addEventListener("keydown", function (event) {

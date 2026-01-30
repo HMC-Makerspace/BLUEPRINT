@@ -46,10 +46,6 @@
 
         <div id="options">
             <div class="options-box">
-                <button id="open-log" class="radio" onclick="openLog()">Open Log</button>
-            </div>
-
-            <div class="options-box">
                 <div class="title">
                     Loaded Paper Size
                 </div>
@@ -144,39 +140,7 @@
                 Price: ---
                 <br>
             </div>   
-            <button id="print" onclick="openPrintConfirmation()" disabled>Print</button>
-        </div>
-
-        <div id="log-container" class="hidden">
-            <div id="log">
-                <div id="log-header">
-                    <div id="log-title">Print Log</div>
-                    <button id="close-log" onclick="closeLog()">X</button>
-                </div>
-                <table id="log-content">
-                    
-                </table>
-            </div>
-        </div>
-
-        <div id="print-confirmation-container" class="hidden">
-            <div id="print-confirmation">
-                <div id="id-input">
-                    <label for="id-input">College ID Number</label>
-                    <input type="text" class="num-input" placeholder="Ex: 12345678" onkeyup="checkID()"/>
-                </div>
-    
-                <div id="print-confirmation-text">
-                    <p>You need to have taken the General Safety Quiz at <a href="https://make.hmc.edu/?p=quiz-info" target="_blank">MAKE</a> to print.</p>
-                    <p>This will open a new background window with the image.</p>
-                    <p>Make sure to reselect paper size as "CALCULATED PAPER" and uncheck "Fit picture to frame".</p>
-                </div>
-
-                <div id="print-confirmation-buttons">
-                    <button id="print-confirmation-yes" class="radio" onclick="printImage()" disabled>Print</button>
-                    <button id="print-confirmation-no" class="radio" onclick="closePrintConfirmation()">Cancel</button>
-                </div>
-            </div>
+            <button id="print" onclick="printImage()" disabled>Print</button>
         </div>
 
         <div id="image-loading-container" class="hidden">
