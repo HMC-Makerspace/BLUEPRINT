@@ -1,6 +1,6 @@
 const API = 'https://make.hmc.edu/api/v1';
 
-const price_per_sq_ft = 0.60;
+const price_per_sq_ft = 1; // $1 per square foot
 const price_per_sq_in = price_per_sq_ft / (12.0 * 12.0);
 
 var state = {
